@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hafiz Naveed — CKAD Kubernetes Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ░░ NAVBAR ░░ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-bracket">[</span>HN<span class="logo-bracket">]</span>
+        <span class="logo-sub">CKAD Lab</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li>
+          <a href="https://github.com/NAVEED261/ckad-kubernetes-project" target="_blank" class="nav-cta">
+            GitHub ↗
+          </a>
+        </li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ░░ HERO ░░ -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="grid-overlay"></div>
+      <div class="glow glow-1"></div>
+      <div class="glow glow-2"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge animate-in" style="--d:0.1s">
+        <span class="badge-dot"></span>
+        Linux Foundation · LiFT Scholarship 2026
+      </div>
+      <h1 class="hero-title animate-in" style="--d:0.25s">
+        Kubernetes<br/>
+        <span class="accent-text">CKAD</span><br/>
+        Practice Lab
+      </h1>
+      <p class="hero-desc animate-in" style="--d:0.4s">
+        A hands-on open-source project covering all 5 official CKAD exam domains —
+        built by <strong>Hafiz Naveed Uddin</strong> from Karachi, Pakistan.
+        Self-taught. Certified. Committed.
+      </p>
+      <div class="hero-actions animate-in" style="--d:0.55s">
+        <a href="https://github.com/NAVEED261/ckad-kubernetes-project" target="_blank" class="btn-primary">
+          View on GitHub ↗
+        </a>
+        <a href="about.html" class="btn-ghost">About Me →</a>
+      </div>
+      <div class="hero-stats animate-in" style="--d:0.7s">
+        <div class="stat">
+          <span class="stat-num">5</span>
+          <span class="stat-label">CKAD Domains</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">12</span>
+          <span class="stat-label">YAML Manifests</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">19</span>
+          <span class="stat-label">Certifications</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">2</span>
+          <span class="stat-label">LF Courses</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-terminal animate-in" style="--d:0.5s">
+      <div class="terminal-header">
+        <span class="t-dot red"></span>
+        <span class="t-dot yellow"></span>
+        <span class="t-dot green"></span>
+        <span class="t-title">kubectl — bash</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-prompt">$</span> kubectl get namespaces</div>
+        <div class="t-line t-out">NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STATUS&nbsp;&nbsp;&nbsp;AGE</div>
+        <div class="t-line t-out">dev&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Active&nbsp;&nbsp;&nbsp;2d</div>
+        <div class="t-line t-out">staging&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Active&nbsp;&nbsp;&nbsp;2d</div>
+        <div class="t-line t-out">production&nbsp;&nbsp;&nbsp;Active&nbsp;&nbsp;&nbsp;2d</div>
+        <div class="t-line"><span class="t-prompt">$</span> kubectl get pods -n dev</div>
+        <div class="t-line t-out">NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;READY&nbsp;&nbsp;&nbsp;STATUS</div>
+        <div class="t-line t-green">webapp-pod&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1/1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Running</div>
+        <div class="t-line t-green">secure-pod&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1/1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Running</div>
+        <div class="t-line t-green">sidecar-logger-xxx&nbsp;&nbsp;&nbsp;2/2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Running</div>
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cursor">█</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ DOMAINS SECTION ░░ -->
+  <section class="domains section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// CKAD Coverage</span>
+        <h2 class="section-title">All 5 Exam Domains</h2>
+        <p class="section-sub">Every official CKAD domain covered with real-world YAML manifests</p>
+      </div>
+      <div class="domains-grid">
+        <div class="domain-card">
+          <div class="domain-icon">⚙️</div>
+          <h3>Application Design & Build</h3>
+          <p>Multi-container pods, sidecar logging pattern, init containers, emptyDir shared volumes</p>
+          <div class="domain-files">
+            <span class="file-tag">pods/webapp-pod.yaml</span>
+            <span class="file-tag">deployments/sidecar-deployment.yaml</span>
+          </div>
+        </div>
+        <div class="domain-card">
+          <div class="domain-icon">🚀</div>
+          <h3>Application Deployment</h3>
+          <p>Rolling updates with maxSurge/maxUnavailable, rollback strategies, deployment history</p>
+          <div class="domain-files">
+            <span class="file-tag">deployments/webapp-deployment.yaml</span>
+          </div>
+        </div>
+        <div class="domain-card">
+          <div class="domain-icon">📡</div>
+          <h3>Observability & Maintenance</h3>
+          <p>Liveness probes, readiness probes, resource requests/limits, container restart policies</p>
+          <div class="domain-files">
+            <span class="file-tag">pods/webapp-pod.yaml</span>
+          </div>
+        </div>
+        <div class="domain-card">
+          <div class="domain-icon">🔒</div>
+          <h3>Environment, Config & Security</h3>
+          <p>ConfigMaps, SecurityContext, non-root containers, read-only filesystems, dropped capabilities</p>
+          <div class="domain-files">
+            <span class="file-tag">configmaps/webapp-configmap.yaml</span>
+            <span class="file-tag">pods/secure-pod.yaml</span>
+          </div>
+        </div>
+        <div class="domain-card domain-card--wide">
+          <div class="domain-icon">🌐</div>
+          <h3>Services & Networking</h3>
+          <p>ClusterIP, NodePort, LoadBalancer services, path-based Ingress routing, NetworkPolicies for pod isolation</p>
+          <div class="domain-files">
+            <span class="file-tag">services/webapp-service.yaml</span>
+            <span class="file-tag">ingress/webapp-ingress.yaml</span>
+            <span class="file-tag">networkpolicies/network-policies.yaml</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ CERTS SECTION ░░ -->
+  <section class="certs section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// Credentials</span>
+        <h2 class="section-title">Linux Foundation Certified</h2>
+      </div>
+      <div class="certs-row">
+        <div class="cert-card">
+          <div class="cert-logo">LF</div>
+          <div class="cert-info">
+            <h4>Introduction to Cloud Infrastructure Technologies</h4>
+            <span class="cert-code">LFS151</span>
+            <span class="cert-date">Dec 18, 2025</span>
+            <span class="cert-id">ID: LF-dsschskbfe</span>
+          </div>
+          <div class="cert-badge">✓ Verified</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-logo">LF</div>
+          <div class="cert-info">
+            <h4>Introduction to RISC-V</h4>
+            <span class="cert-code">LFD110</span>
+            <span class="cert-date">Feb 28, 2026</span>
+            <span class="cert-id">ID: LF-tca2qyi3kr</span>
+          </div>
+          <div class="cert-badge">✓ Verified</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ CTA SECTION ░░ -->
+  <section class="cta-section section">
+    <div class="container">
+      <div class="cta-box">
+        <div class="cta-glow"></div>
+        <h2>Explore the Full Project</h2>
+        <p>12 YAML manifests. 8 domain folders. Complete CKAD exam coverage. Open source & free to learn from.</p>
+        <div class="cta-actions">
+          <a href="https://github.com/NAVEED261/ckad-kubernetes-project" target="_blank" class="btn-primary">View on GitHub ↗</a>
+          <a href="about.html" class="btn-ghost">About the Author →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ FOOTER ░░ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo-bracket">[</span>HN<span class="logo-bracket">]</span>
+        <span>Hafiz Naveed Uddin · Karachi, Pakistan</span>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://github.com/NAVEED261/ckad-kubernetes-project" target="_blank">GitHub ↗</a>
+        <a href="https://naveed-portfolio-sigma.vercel.app/" target="_blank">Portfolio ↗</a>
+      </div>
+      <p class="footer-copy">© 2026 · Built for Linux Foundation LiFT Scholarship · CKAD</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
