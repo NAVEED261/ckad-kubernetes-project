@@ -1,0 +1,60 @@
+# ConfigMaps - CKAD Topic: Application Environment, Config & Security
+# Decouple config from container images
+
+---
+# 1. Simple key-value ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webapp-config
+  namespace: dev
+data:
+  APP_ENV: "development"
+  APP_PORT: "80"
+  LOG_LEVEL: "info"
+  DATABASE_HOST: "postgres-service"
+  DATABASE_PORT: "5432"
+
+---
+# 2. ConfigMap with a full config file
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: dev
+data:
+  nginx.conf: |
+    server {
+        listen 80;
+        server_name localhost;
+
+        location / {
+            root /usr/share/nginx/html;
+            index index.html;
+        }
+
+        location /health {
+            return 200 'healthy\n';
+            add_header Content-Type text/plain;
+        }
+    }
+
+---
+# Usage in a Pod:
+# envFrom:
+#   - configMapRef:
+#       name: webapp-config
+#
+# Or single key:
+# env:
+#   - name: APP_ENV
+#     valueFrom:
+#       configMapKeyRef:
+#         name: webapp-config
+#         key: APP_ENV
+#
+# Or as volume:
+# volumes:
+#   - name: config-vol
+#     configMap:
+#       name: nginx-config

@@ -1,0 +1,29 @@
+# Namespaces - Isolating environments for dev, staging, and production
+# Apply with: kubectl apply -f namespaces/
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+  labels:
+    environment: development
+    team: backend
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: staging
+  labels:
+    environment: staging
+    team: backend
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production
+  labels:
+    environment: production
+    team: backend

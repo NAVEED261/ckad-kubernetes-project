@@ -1,0 +1,41 @@
+# Ingress - CKAD Topic: Services & Networking
+# Path-based routing to different services
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webapp-ingress
+  namespace: dev
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+
+  rules:
+    - host: myapp.example.com
+      http:
+        paths:
+          # Route /api to backend service
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 8080
+
+          # Route /frontend to frontend service
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: webapp-clusterip
+                port:
+                  number: 80
+
+  # TLS configuration (optional)
+  # tls:
+  #   - hosts:
+  #       - myapp.example.com
+  #     secretName: tls-secret

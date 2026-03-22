@@ -1,0 +1,81 @@
+# Deployment with Rolling Update Strategy
+# CKAD Topic: Application Deployment
+# Demonstrates: rolling updates, rollback, scaling
+# Apply: kubectl apply -f deployments/webapp-deployment.yaml -n dev
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  namespace: dev
+  labels:
+    app: webapp
+    version: v1
+  annotations:
+    kubernetes.io/change-cause: "Initial deployment - nginx 1.21"
+spec:
+  replicas: 3
+
+  # Label selector - must match pod template labels
+  selector:
+    matchLabels:
+      app: webapp
+
+  # Rolling Update Strategy (zero-downtime deployments)
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1        # 1 extra pod allowed during update
+      maxUnavailable: 0  # Never go below desired replicas
+
+  template:
+    metadata:
+      labels:
+        app: webapp
+        version: v1
+    spec:
+      containers:
+        - name: webapp
+          image: nginx:1.21
+          ports:
+            - containerPort: 80
+
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+          env:
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: webapp-config
+                  key: APP_ENV
+            - name: APP_VERSION
+              value: "1.0.0"
+
+---
+# Useful commands after applying:
+#
+# Scale up:   kubectl scale deployment webapp-deployment --replicas=5 -n dev
+# Update img: kubectl set image deployment/webapp-deployment webapp=nginx:1.22 -n dev
+# Rollback:   kubectl rollout undo deployment/webapp-deployment -n dev
+# History:    kubectl rollout history deployment/webapp-deployment -n dev
+# Status:     kubectl rollout status deployment/webapp-deployment -n dev

@@ -1,0 +1,54 @@
+# Pod with Security Context
+# CKAD Topic: Application Environment, Configuration & Security
+# Runs container as non-root user with read-only filesystem
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secure-pod
+  namespace: dev
+  labels:
+    app: secure-app
+spec:
+  # Pod-level security: run as non-root
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 2000
+
+  containers:
+    - name: secure-container
+      image: nginx:1.21-alpine
+      ports:
+        - containerPort: 8080
+
+      # Container-level security
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities:
+          drop:
+            - ALL
+
+      resources:
+        requests:
+          memory: "32Mi"
+          cpu: "100m"
+        limits:
+          memory: "64Mi"
+          cpu: "200m"
+
+      # Writable volume needed since rootfs is read-only
+      volumeMounts:
+        - name: tmp-vol
+          mountPath: /tmp
+        - name: cache-vol
+          mountPath: /var/cache/nginx
+
+  volumes:
+    - name: tmp-vol
+      emptyDir: {}
+    - name: cache-vol
+      emptyDir: {}
+
+  restartPolicy: Never

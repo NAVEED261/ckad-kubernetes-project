@@ -1,0 +1,55 @@
+# Services - CKAD Topic: Services & Networking
+# Three service types demonstrated
+
+---
+# 1. ClusterIP - Internal cluster communication only
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-clusterip
+  namespace: dev
+  labels:
+    app: webapp
+spec:
+  type: ClusterIP
+  selector:
+    app: webapp          # Routes to pods with this label
+  ports:
+    - protocol: TCP
+      port: 80           # Service port
+      targetPort: 80     # Container port
+
+---
+# 2. NodePort - Expose app on each node's IP
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-nodeport
+  namespace: dev
+spec:
+  type: NodePort
+  selector:
+    app: webapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30080    # Range: 30000-32767
+
+---
+# 3. LoadBalancer - Cloud provider external IP
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-loadbalancer
+  namespace: dev
+  annotations:
+    # For AWS: service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+spec:
+  type: LoadBalancer
+  selector:
+    app: webapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
